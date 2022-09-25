@@ -73,7 +73,7 @@ final class XMLBuilderTests: XCTestCase {
     }
 
     func testXMLBuilderReadmeExample() {
-        let xml = document {
+        let xml = Document(comment: "This is a\nmultiline comment!") {
             node("gpx", attributes: [
                 ("xmlns", "http://www.topografix.com/GPX/1/1"),
                 ("creator", "byHand"),
@@ -91,6 +91,10 @@ final class XMLBuilderTests: XCTestCase {
         }
 
         let expectedResult = """
+            <!--
+              This is a
+              multiline comment!
+            -->
             <?xml version="1.0" encoding="UTF-8"?>
             <gpx xmlns="http://www.topografix.com/GPX/1/1" creator="byHand" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
               <wpt lat="39.921055008" lon="3.054223107">
