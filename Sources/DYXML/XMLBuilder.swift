@@ -36,8 +36,8 @@ public struct XMLBuilder {
 
 public typealias Document = XMLDocument
 public extension Document {
-    init(@XMLBuilder children: () -> [XML]) {
-        self.init(children: children())
+    init(version: String = "1.0", encoding: String = "UTF-8", @XMLBuilder children: () -> [XML]) {
+        self.init(version: version, encoding: encoding, children: children())
     }
 }
 
