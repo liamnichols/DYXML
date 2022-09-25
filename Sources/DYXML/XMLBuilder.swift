@@ -32,6 +32,50 @@ public struct XMLBuilder {
     }
 }
 
+// MARK: - Interface
+
+public typealias Document = XMLDocument
+public extension Document {
+    init(@XMLBuilder children: () -> [XML]) {
+        self.init(children: children())
+    }
+}
+
+public typealias Node = XMLNode
+public extension Node {
+    init(_ name: String, attributes: [XMLAttribute] = [], @XMLBuilder children: () -> [XML]) {
+        self.init(name: name, attributes: attributes, children: children())
+    }
+
+    init(_ name: String, attributes: XMLAttributes, @XMLBuilder children: () -> [XML]) {
+        self.init(name: name, attributes: attributes.elements, children: children())
+    }
+
+    init(_ name: String, attributes: [XMLAttribute] = [], value: XML) {
+        self.init(name: name, attributes: attributes, children: [value])
+    }
+
+    init(_ name: String, attributes: XMLAttributes, value: XML) {
+        self.init(name: name, attributes: attributes.elements, children: [value])
+    }
+
+    func attribute(_ name: String, value: String) -> Node {
+        var attributes = self.attributes
+        attributes.append((name, value))
+
+        return Node(name: self.name, attributes: attributes, children: self.children)
+    }
+}
+
+public typealias Comment = XMLComment
+public extension Comment {
+    init(_ value: String) {
+        self.init(value: value)
+    }
+}
+
+// MARK: - Legacy
+
 public func document(@XMLBuilder children: () -> [XML]) -> XML {
     return XMLDocument(children: children())
 }

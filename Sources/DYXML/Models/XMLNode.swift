@@ -1,7 +1,7 @@
 public struct XMLNode: XML {
-    private let name: String
-    private let attributes: [XMLAttribute]
-    private let children: [XML]
+    let name: String
+    let attributes: [XMLAttribute]
+    let children: [XML]
 
     init(name: String, attributes: [XMLAttribute] = [], children: [XML] = []) {
         self.name = name

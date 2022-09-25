@@ -140,11 +140,42 @@ final class XMLBuilderTests: XCTestCase {
         XCTAssertEqual(xml.toString(withIndentation: 2), expectedResult)
     }
 
+    func testModernInterface() {
+        let document = Document {
+            Comment("This is an XML Document")
+            Node("Root") {
+                Node("Node", attributes: [
+                    "foo": "bar",
+                    "ordered": "true"
+                ]) {
+                    Node("Color", value: "red")
+                    Node("Color", value: "green")
+                    Node("Color", value: "blue")
+                }
+            }
+            .attribute("root", value: "true")
+        }
+
+        XCTAssertEqual(document.toString(withIndentation: 2), """
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!-- This is an XML Document -->
+        <Root root="true">
+          <Node foo="bar" ordered="true">
+            <Color>red</Color>
+            <Color>green</Color>
+            <Color>blue</Color>
+          </Node>
+        </Root>
+
+        """)
+    }
+
     static var allTests = [
         ("testXMLBuilderSimple", testXMLBuilderSimple),
         ("testXMLBuilderWithChildren", testXMLBuilderWithChildren),
         ("testXMLBuilderWithEither", testXMLBuilderWithEither),
         ("testXMLBuilderWithArray", testXMLBuilderWithArray),
-        ("testXMLBuilderComments", testXMLBuilderComments)
+        ("testXMLBuilderComments", testXMLBuilderComments),
+        ("testModernInterface", testModernInterface)
     ]
 }
