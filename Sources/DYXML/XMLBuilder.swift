@@ -43,3 +43,7 @@ public func node(_ name: String, attributes: [XMLAttribute] = [], @XMLBuilder ch
 public func node(_ name: String, attributes: [XMLAttribute] = [], value: XML) -> XML {
     return XMLNode(name: name, attributes: attributes, children: [value])
 }
+
+public func comment(_ value: String) -> XML {
+    return XMLComment(value: value)
+}

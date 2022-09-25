@@ -105,10 +105,46 @@ final class XMLBuilderTests: XCTestCase {
         XCTAssertEqual(xml.toString(withIndentation: 2), expectedResult)
     }
 
+    func testXMLBuilderComments() {
+        let xml = document {
+            comment("Complete list of available resources")
+            node("resources") {
+                comment("RGB")
+                node("color", value: "red")
+                node("color", value: "green")
+                node("color", value: "blue")
+                comment("CMYK")
+                node("color", value: "cyan")
+                node("color", value: "magneta")
+                node("color", value: "yellow")
+                node("color", value: "black")
+            }
+        }
+
+        let expectedResult = """
+            <?xml version="1.0" encoding="UTF-8"?>
+            <!-- Complete list of available resources -->
+            <resources>
+              <!-- RGB -->
+              <color>red</color>
+              <color>green</color>
+              <color>blue</color>
+              <!-- CMYK -->
+              <color>cyan</color>
+              <color>magneta</color>
+              <color>yellow</color>
+              <color>black</color>
+            </resources>
+
+            """
+        XCTAssertEqual(xml.toString(withIndentation: 2), expectedResult)
+    }
+
     static var allTests = [
         ("testXMLBuilderSimple", testXMLBuilderSimple),
         ("testXMLBuilderWithChildren", testXMLBuilderWithChildren),
         ("testXMLBuilderWithEither", testXMLBuilderWithEither),
         ("testXMLBuilderWithArray", testXMLBuilderWithArray),
+        ("testXMLBuilderComments", testXMLBuilderComments)
     ]
 }
