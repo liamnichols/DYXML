@@ -99,6 +99,7 @@ final class XMLTests: XCTestCase {
 
         let document = ResourceDocument {
             ColorNode(name: "primaryText", value: "@color/black")
+            Spacer()
             ColorNode(name: "primaryBackground", value: "@color/white")
         }
 
@@ -107,6 +108,7 @@ final class XMLTests: XCTestCase {
         <?xml version="1.0" encoding="utf-8"?>
         <resources>
             <color name="primaryText">@color/black</color>
+
             <color name="primaryBackground">@color/white</color>
         </resources>
 

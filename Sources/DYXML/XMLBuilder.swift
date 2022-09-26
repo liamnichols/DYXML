@@ -74,6 +74,8 @@ public extension Comment {
     }
 }
 
+public typealias Spacer = XMLSpacer
+
 // MARK: - Legacy
 
 public func document(@XMLBuilder children: () -> [XML]) -> XML {
