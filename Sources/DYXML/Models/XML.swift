@@ -1,6 +1,22 @@
 public protocol XML {
+    var content: XML { get }
+}
+
+protocol XMLRenderable: XML {
     func renderXML(into stream: XMLOutputStream)
 }
+
+extension XML {
+    var renderable: XMLRenderable {
+        if let renderable = self as? XMLRenderable {
+            return renderable
+        } else {
+            return self.content.renderable
+        }
+    }
+}
+
+// MARK: - Attributes
 
 public typealias XMLAttribute = (String, String)
 

@@ -9,7 +9,7 @@ public extension XML {
     /// - Returns: the content XML as a string
     func toString(withIndentation space: Int? = nil) -> String {
         let xmlOutputStreamString = XMLOutputStreamString(indentation: space)
-        renderXML(into: xmlOutputStreamString)
+        renderable.renderXML(into: xmlOutputStreamString)
         return xmlOutputStreamString.output
     }
 }

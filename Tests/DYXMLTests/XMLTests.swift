@@ -72,6 +72,47 @@ final class XMLTests: XCTestCase {
         XCTAssertEqual(document.string, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><type>9</type><content><text>Hello, World</text></content></root>")
     }
 
+    func testCustomTypes() {
+        struct ResourceDocument: XML {
+            let resources: [XML]
+
+            init(@XMLBuilder resources: () -> [XML]) {
+                self.resources = resources()
+            }
+
+            var content: XML {
+                Document(comment: "Automatically generated, do not edit!", encoding: "utf-8") {
+                    Node(name: "resources", children: resources)
+                }
+            }
+        }
+
+        struct ColorNode: XML {
+            let name: String
+            let value: String
+
+            var content: XML {
+                Node("color", value: value)
+                    .attribute("name", value: name)
+            }
+        }
+
+        let document = ResourceDocument {
+            ColorNode(name: "primaryText", value: "@color/black")
+            ColorNode(name: "primaryBackground", value: "@color/white")
+        }
+
+        XCTAssertEqual(document.toString(withIndentation: 4), """
+        <!-- Automatically generated, do not edit! -->
+        <?xml version="1.0" encoding="utf-8"?>
+        <resources>
+            <color name="primaryText">@color/black</color>
+            <color name="primaryBackground">@color/white</color>
+        </resources>
+
+        """)
+    }
+
     func testRenderXMLDocumentWithIndentation() {
         let document = XMLDocument(children: [
             XMLNode(name: "root", children: [

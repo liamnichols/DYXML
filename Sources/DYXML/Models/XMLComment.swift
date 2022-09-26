@@ -1,6 +1,6 @@
 import Foundation
 
-public struct XMLComment: XML {
+public struct XMLComment: XMLRenderable {
     private let value: String
 
     init(value: String) {
@@ -34,4 +34,6 @@ public struct XMLComment: XML {
             stream.writeNewLine()
         }
     }
+
+    public var content: XML { self }
 }

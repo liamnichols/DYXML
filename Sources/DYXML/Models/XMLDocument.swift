@@ -1,4 +1,4 @@
-public struct XMLDocument: XML {
+public struct XMLDocument: XMLRenderable {
     private let comment: String?
     private let version: String
     private let encoding: String
@@ -18,7 +18,9 @@ public struct XMLDocument: XML {
         stream.write(#"<?xml version="\#(version)" encoding="\#(encoding)"?>"#)
         stream.writeNewLine()
         for child in children {
-            child.renderXML(into: stream)
+            child.renderable.renderXML(into: stream)
         }
     }
+
+    public var content: XML { self }
 }
